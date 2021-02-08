@@ -1,15 +1,11 @@
 import { feedDigipet, trainDigipet, walkDigipet } from "./controller";
-import { getDigipet, resetDigipet, setDigipet } from "./model";
+import { getDigipet, INITIAL_DIGIPET, resetDigipet, setDigipet } from "./model";
 
 describe.skip("feedDigipet", () => {
   it("increases digipet nutrition by 10 and decreases discipline by 5", () => {
     // setup
     resetDigipet();
-    expect(getDigipet()).toStrictEqual({
-      happiness: 50,
-      nutrition: 50,
-      discipline: 50,
-    });
+    expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
 
     // act
     feedDigipet();
@@ -49,11 +45,7 @@ describe.skip("trainDigipet", () => {
   it("increases digipet discipline by 10 and decreases happiness by 5", () => {
     // setup
     resetDigipet();
-    expect(getDigipet()).toStrictEqual({
-      happiness: 50,
-      nutrition: 50,
-      discipline: 50,
-    });
+    expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
 
     // act
     trainDigipet();
@@ -93,11 +85,7 @@ describe("walkDigipet", () => {
   it("increases digipet happiness by 10 and decreases nutrition by 5 (to represent need for sustenance)", () => {
     // setup
     resetDigipet();
-    expect(getDigipet()).toStrictEqual({
-      happiness: 50,
-      nutrition: 50,
-      discipline: 50,
-    });
+    expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
 
     // act
     walkDigipet();

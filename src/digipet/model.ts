@@ -4,7 +4,7 @@ export interface Digipet {
   discipline: number;
 }
 
-const initialDigipet: Digipet = {
+export const INITIAL_DIGIPET: Digipet = {
   happiness: 50,
   nutrition: 50,
   discipline: 50,
@@ -27,10 +27,10 @@ export function getDigipet(): Digipet | null {
 
 export function resetDigipet(): void {
   // spread to avoid mutating initial digipet
-  _userDigipet = { ...initialDigipet };
+  _userDigipet = { ...INITIAL_DIGIPET };
 }
 
-export function setDigipet(newDigipet?: Digipet): void {
+export function setDigipet(newDigipet?: Digipet | undefined): void {
   _userDigipet = newDigipet;
 }
 
