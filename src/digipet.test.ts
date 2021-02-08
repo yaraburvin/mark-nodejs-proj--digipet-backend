@@ -1,4 +1,10 @@
-import { _userDigipet, Digipet, getDigipet, setDigipet } from "./digipet";
+import {
+  _userDigipet,
+  Digipet,
+  getDigipet,
+  setDigipet,
+  resetDigipet,
+} from "./digipet";
 
 describe("setDigipet", () => {
   it("reassigns the _userDigipet variable to the passed in argument", () => {
@@ -28,5 +34,34 @@ describe("getDigipet", () => {
     setDigipet(digipetTest);
     expect(getDigipet()).toStrictEqual(digipetTest);
     expect(getDigipet()).not.toBe(digipetTest);
+  });
+});
+
+describe("resetDigipet", () => {
+  it("resets all digipet stats to 50", () => {
+    // test setup
+    const digipetTest: Digipet = {
+      happiness: 60,
+      nutrition: 60,
+      discipline: 60,
+    };
+    setDigipet(digipetTest);
+
+    // confirm digipet stats not currently 50
+    expect(getDigipet()).not.toStrictEqual({
+      happiness: 50,
+      nutrition: 50,
+      discipline: 50,
+    });
+
+    // act
+    resetDigipet();
+
+    // confirm digipet stats now all 50
+    expect(getDigipet()).toStrictEqual({
+      happiness: 50,
+      nutrition: 50,
+      discipline: 50,
+    });
   });
 });
