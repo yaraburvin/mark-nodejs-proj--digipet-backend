@@ -19,7 +19,10 @@ describe("getDigipet", () => {
     expect(getDigipet()).not.toBe(digipetTest);
   });
 
-  // it("returns null if ");
+  it("returns null if there is no digipet", () => {
+    setDigipet(); // sets digipet to undefined
+    expect(getDigipet()).toBeNull();
+  });
 });
 
 describe("updateDigipetBounded", () => {
