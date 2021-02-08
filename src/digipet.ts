@@ -23,7 +23,7 @@ export let _userDigipet: Digipet | undefined;
  * @param digipetKey the digipet measure to update
  * @param netUpdate the intended change - e.g. `12` to increase by 12, `-4` to decrease by 4
  */
-function makeBoundedDigipetUpdate(
+export function makeBoundedDigipetUpdate(
   digipetKey: keyof Digipet,
   netUpdate: number
 ): void {
