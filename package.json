@@ -5,7 +5,8 @@
   "scripts": {
     "start": "ts-node src",
     "start:dev": "ts-node-dev src",
-    "test": "jest"
+    "test": "jest --watch",
+    "test:no-watch": "jest"
   },
   "author": "",
   "license": "CC-BY-NC-ND-4.0",
