@@ -1,3 +1,9 @@
+/**
+ * The core Digipet type and methods.
+ *
+ * These are encapsulated over in controller.ts
+ */
+
 export interface Digipet {
   happiness: number;
   nutrition: number;
@@ -9,6 +15,10 @@ const initialDigipet: Digipet = {
   nutrition: 50,
   discipline: 50,
 };
+/**
+ * The default state of a new digipet.
+ * Frozen to prevent accidental mutations.
+ */
 export const INITIAL_DIGIPET = Object.freeze(initialDigipet);
 
 /**
@@ -31,6 +41,11 @@ export function resetDigipet(): void {
   _userDigipet = { ...INITIAL_DIGIPET };
 }
 
+/**
+ * Set the user's digipet to a new object (or `undefined`)
+ *
+ * @param newDigipet The new digipet data; pass `undefined` to effectively remove the digipet
+ */
 export function setDigipet(newDigipet?: Digipet | undefined): void {
   _userDigipet = newDigipet;
 }
