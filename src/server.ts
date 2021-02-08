@@ -10,17 +10,33 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/digipet", (req, res) => {
+  const digipet = getDigipet();
+  if (digipet) {
+    res.json({
+      message: "Your digipet is waiting for you!",
+      digipet, // equivalent to digipet: digipet
+    });
+  } else {
+    res.json({
+      message: "You don't have a digipet yet! Try hatching one with /hatch",
+      digipet: undefined,
+    });
+  }
+});
+
 app.get("/digipet/hatch", (req, res) => {
-  if (getDigipet()) {
+  const digipet = getDigipet();
+  if (digipet) {
     res.json({
       message: "You can't hatch a digipet now because you already have one!",
-      digipet: getDigipet(),
+      digipet,
     });
   } else {
     resetDigipet();
     res.json({
       message: "You have hatched an adorable new digipet. Just the cutest.",
-      digipet: getDigipet,
+      digipet: getDigipet(),
     });
   }
 });
