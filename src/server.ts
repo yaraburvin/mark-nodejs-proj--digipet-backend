@@ -35,7 +35,8 @@ app.get("/digipet/hatch", (req, res) => {
   } else {
     resetDigipet();
     res.json({
-      message: "You have hatched an adorable new digipet. Just the cutest.",
+      message:
+        "You have successfully hatched an adorable new digipet. Just the cutest.",
       digipet: getDigipet(),
     });
   }

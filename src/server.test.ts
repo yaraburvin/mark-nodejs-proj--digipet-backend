@@ -34,7 +34,7 @@ describe("GET /digipet/hatch", () => {
 
   test("if the user has no digipet, it responds with a message about successfully hatching a digipet, and default digipet data", async () => {
     setDigipet(undefined);
-    const response = await supertest(app).get("/digipet");
+    const response = await supertest(app).get("/digipet/hatch");
     expect(response.body.digipet).toStrictEqual(INITIAL_DIGIPET);
     expect(response.body.message).toMatch(/success/i);
     expect(response.body.message).toMatch(/hatch/i);
