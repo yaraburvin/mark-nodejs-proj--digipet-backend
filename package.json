@@ -1,15 +1,14 @@
 {
-  "name": "my-little-server",
+  "name": "mark-nodejs-proj--data-store",
   "version": "0.0.1",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/server.ts",
-    "start:dev": "ts-node-dev src/server.ts",
+    "start": "ts-node src",
+    "start:dev": "ts-node-dev src",
     "test": "jest"
   },
   "author": "",
-  "license": "ISC",
+  "license": "CC-BY-NC-ND-4.0",
   "devDependencies": {
     "@types/express": "^4.17.10",
     "@types/jest": "^26.0.20",
