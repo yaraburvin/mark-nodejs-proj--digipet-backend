@@ -5,8 +5,7 @@ import {
   updateDigipetBounded,
   resetDigipet,
   setDigipet,
-  walkDigipet,
-} from "./digipet";
+} from "./model";
 
 describe("getDigipet", () => {
   it("gets the stats for the user digipet (but not the underlying object)", () => {
@@ -197,27 +196,5 @@ describe("setDigipet", () => {
   it("reassigns the _userDigipet variable to undefined when no argument passed in", () => {
     setDigipet();
     expect(_userDigipet).toBeUndefined();
-  });
-});
-
-describe("walkDigipet", () => {
-  it("increases digipet happiness by 10 and decreases nutrition by 5 (to represent need for sustenance)", () => {
-    // setup
-    resetDigipet();
-    expect(getDigipet()).toStrictEqual({
-      happiness: 50,
-      nutrition: 50,
-      discipline: 50,
-    });
-
-    // act
-    walkDigipet();
-
-    // assert
-    expect(getDigipet()).toStrictEqual({
-      happiness: 60,
-      nutrition: 45,
-      discipline: 50,
-    });
   });
 });

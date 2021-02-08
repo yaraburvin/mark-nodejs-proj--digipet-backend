@@ -52,10 +52,3 @@ export function updateDigipetBounded(
     }
   }
 }
-
-export function walkDigipet(): void {
-  if (_userDigipet) {
-    updateDigipetBounded("happiness", 10);
-    updateDigipetBounded("nutrition", -5);
-  }
-}
