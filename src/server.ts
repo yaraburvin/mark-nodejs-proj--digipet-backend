@@ -1,5 +1,5 @@
 import express from "express";
-import { getSignaturesArr } from "../data/signatures";
+import { addSignature, getSignaturesArr } from "../signatures/api";
 
 const app = express();
 
@@ -17,6 +17,12 @@ app.get("/signatures", (req, res) => {
       signatures,
     },
   });
+});
+
+app.post("/signatures", (req, res) => {
+  const { name, message } = req.body;
+
+  addSignature({ name, message });
 });
 
 export default app;

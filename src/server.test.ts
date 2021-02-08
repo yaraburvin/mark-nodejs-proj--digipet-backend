@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import { getSignaturesArr } from "../data/signatures";
+import { getSignaturesArr } from "../signatures/api";
 import app from "./server";
 
 describe("Server initialisation", () => {
@@ -28,9 +28,11 @@ describe("Endpoint testing", () => {
     // check that it comes back with only one signature
     expect(response.body.data.signatures).toHaveLength(1);
 
-    // check that the signature has a string timestamp
+    // check that the signature has a number epochTimestamp
     // (we don't know what it will be at test writing)
-    expect(typeof response.body.data.signatures[0]).toBe("string");
+    expect(typeof response.body.data.signatures[0].epochTimestamp).toBe(
+      "number"
+    );
   });
 
   test("POST /signatures adds a signature", async () => {
@@ -50,7 +52,7 @@ describe("Endpoint testing", () => {
       },
     });
 
-    // check that it has added a timesstamp
-    expect(typeof response.body.data.signature.timestamp).toBe("string");
+    // check that it has added a number timestamp
+    expect(typeof response.body.data.signature.epochTimestamp).toBe("number");
   });
 });
