@@ -2,7 +2,7 @@ import {
   _userDigipet,
   Digipet,
   getDigipet,
-  makeBoundedDigipetUpdate,
+  updateDigipetBounded,
   resetDigipet,
   setDigipet,
 } from "./digipet";
@@ -20,7 +20,7 @@ describe("getDigipet", () => {
   });
 });
 
-describe("makeBoundedDigipetUpdate", () => {
+describe("updateDigipetBounded", () => {
   it("increases the specified stat when passed in a positive number", () => {
     const digipetTest: Digipet = {
       happiness: 60,
@@ -29,21 +29,21 @@ describe("makeBoundedDigipetUpdate", () => {
     };
     setDigipet(digipetTest);
 
-    makeBoundedDigipetUpdate("happiness", 30);
+    updateDigipetBounded("happiness", 30);
     expect(getDigipet()).toStrictEqual({
       happiness: 90,
       nutrition: 60,
       discipline: 60,
     });
 
-    makeBoundedDigipetUpdate("nutrition", 25);
+    updateDigipetBounded("nutrition", 25);
     expect(getDigipet()).toStrictEqual({
       happiness: 90,
       nutrition: 85,
       discipline: 60,
     });
 
-    makeBoundedDigipetUpdate("discipline", 0.5);
+    updateDigipetBounded("discipline", 0.5);
     expect(getDigipet()).toStrictEqual({
       happiness: 90,
       nutrition: 85,
@@ -59,25 +59,85 @@ describe("makeBoundedDigipetUpdate", () => {
     };
     setDigipet(digipetTest);
 
-    makeBoundedDigipetUpdate("happiness", -30);
+    updateDigipetBounded("happiness", -30);
     expect(getDigipet()).toStrictEqual({
       happiness: 30,
       nutrition: 60,
       discipline: 60,
     });
 
-    makeBoundedDigipetUpdate("nutrition", -25);
+    updateDigipetBounded("nutrition", -25);
     expect(getDigipet()).toStrictEqual({
       happiness: 30,
       nutrition: 35,
       discipline: 60,
     });
 
-    makeBoundedDigipetUpdate("discipline", -0.5);
+    updateDigipetBounded("discipline", -0.5);
     expect(getDigipet()).toStrictEqual({
       happiness: 30,
       nutrition: 35,
       discipline: 59.5,
+    });
+  });
+
+  it("bounds changes to a maximum final value of 100", () => {
+    const digipetTest: Digipet = {
+      happiness: 60,
+      nutrition: 60,
+      discipline: 60,
+    };
+    setDigipet(digipetTest);
+
+    updateDigipetBounded("happiness", 1000000000);
+    expect(getDigipet()).toStrictEqual({
+      happiness: 100,
+      nutrition: 60,
+      discipline: 60,
+    });
+
+    updateDigipetBounded("nutrition", 40.1);
+    expect(getDigipet()).toStrictEqual({
+      happiness: 100,
+      nutrition: 100,
+      discipline: 60,
+    });
+
+    updateDigipetBounded("discipline", Infinity);
+    expect(getDigipet()).toStrictEqual({
+      happiness: 100,
+      nutrition: 100,
+      discipline: 100,
+    });
+  });
+
+  it("bounds changes to a minimum final value of 0", () => {
+    const digipetTest: Digipet = {
+      happiness: 60,
+      nutrition: 60,
+      discipline: 60,
+    };
+    setDigipet(digipetTest);
+
+    updateDigipetBounded("happiness", -1000000000);
+    expect(getDigipet()).toStrictEqual({
+      happiness: 0,
+      nutrition: 60,
+      discipline: 60,
+    });
+
+    updateDigipetBounded("nutrition", -60.1);
+    expect(getDigipet()).toStrictEqual({
+      happiness: 0,
+      nutrition: 0,
+      discipline: 60,
+    });
+
+    updateDigipetBounded("discipline", -Infinity);
+    expect(getDigipet()).toStrictEqual({
+      happiness: 0,
+      nutrition: 0,
+      discipline: 0,
     });
   });
 });

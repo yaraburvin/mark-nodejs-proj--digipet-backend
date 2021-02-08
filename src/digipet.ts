@@ -17,13 +17,27 @@ const initialDigipet: Digipet = {
  */
 export let _userDigipet: Digipet | undefined;
 
+export function getDigipet(): Digipet | null {
+  // spread to avoid mutating
+  return _userDigipet ? { ..._userDigipet } : null;
+}
+
+export function resetDigipet(): void {
+  // spread to avoid mutating initial digipet
+  _userDigipet = { ...initialDigipet };
+}
+
+export function setDigipet(newDigipet: Digipet): void {
+  _userDigipet = newDigipet;
+}
+
 /**
  * Makes a bounded update to the user's digipet - increases and decreases up to a maximum of 100 and a minimum of 0
  *
  * @param digipetKey the digipet measure to update
  * @param netUpdate the intended change - e.g. `12` to increase by 12, `-4` to decrease by 4
  */
-export function makeBoundedDigipetUpdate(
+export function updateDigipetBounded(
   digipetKey: keyof Digipet,
   netUpdate: number
 ): void {
@@ -39,23 +53,9 @@ export function makeBoundedDigipetUpdate(
   }
 }
 
-export function getDigipet(): Digipet | null {
-  // spread to avoid mutating
-  return _userDigipet ? { ..._userDigipet } : null;
-}
-
-export function resetDigipet(): void {
-  // spread to avoid mutating initial digipet
-  _userDigipet = { ...initialDigipet };
-}
-
-export function setDigipet(newDigipet: Digipet): void {
-  _userDigipet = newDigipet;
-}
-
 export function walkDigipet(): void {
   if (_userDigipet) {
-    makeBoundedDigipetUpdate("happiness", 10);
-    makeBoundedDigipetUpdate("nutrition", -5);
+    updateDigipetBounded("happiness", 10);
+    updateDigipetBounded("nutrition", -5);
   }
 }
