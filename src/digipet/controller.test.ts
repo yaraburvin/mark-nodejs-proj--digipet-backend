@@ -1,4 +1,9 @@
-import { feedDigipet, trainDigipet, walkDigipet } from "./controller";
+import {
+  feedDigipet,
+  ignoreDigipet,
+  trainDigipet,
+  walkDigipet,
+} from "./controller";
 import { getDigipet, INITIAL_DIGIPET, resetDigipet, setDigipet } from "./model";
 
 describe.skip("feedDigipet", () => {
@@ -12,9 +17,9 @@ describe.skip("feedDigipet", () => {
 
     // assert
     expect(getDigipet()).toStrictEqual({
-      happiness: 50,
-      nutrition: 60,
-      discipline: 45,
+      happiness: INITIAL_DIGIPET.happiness,
+      nutrition: INITIAL_DIGIPET.nutrition + 10,
+      discipline: INITIAL_DIGIPET.discipline - 5,
     });
   });
 
@@ -41,6 +46,39 @@ describe.skip("feedDigipet", () => {
   });
 });
 
+describe.skip("ignoreDigipet", () => {
+  it("decreases all values by 10", () => {
+    // setup
+    resetDigipet();
+    expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
+
+    // act
+    ignoreDigipet();
+
+    // assert
+    expect(getDigipet()).toStrictEqual({
+      happiness: INITIAL_DIGIPET.happiness - 10,
+      nutrition: INITIAL_DIGIPET.nutrition - 10,
+      discipline: INITIAL_DIGIPET.discipline - 10,
+    });
+  });
+
+  it("cannot decrease values below 0", () => {
+    // setup
+    setDigipet({ happiness: 5, nutrition: 5, discipline: 5 });
+
+    // act
+    ignoreDigipet();
+
+    // assert
+    expect(getDigipet()).toStrictEqual({
+      happiness: 0,
+      nutrition: 0,
+      discipline: 0,
+    });
+  });
+});
+
 describe.skip("trainDigipet", () => {
   it("increases digipet discipline by 10 and decreases happiness by 5", () => {
     // setup
@@ -52,9 +90,9 @@ describe.skip("trainDigipet", () => {
 
     // assert
     expect(getDigipet()).toStrictEqual({
-      happiness: 45,
-      nutrition: 50,
-      discipline: 60,
+      happiness: INITIAL_DIGIPET.happiness - 5,
+      nutrition: INITIAL_DIGIPET.nutrition,
+      discipline: INITIAL_DIGIPET.discipline + 10,
     });
   });
 
@@ -92,9 +130,9 @@ describe("walkDigipet", () => {
 
     // assert
     expect(getDigipet()).toStrictEqual({
-      happiness: 60,
-      nutrition: 45,
-      discipline: 50,
+      happiness: INITIAL_DIGIPET.happiness + 10,
+      nutrition: INITIAL_DIGIPET.nutrition - 5,
+      discipline: INITIAL_DIGIPET.discipline,
     });
   });
 
