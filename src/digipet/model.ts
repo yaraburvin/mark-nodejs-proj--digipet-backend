@@ -17,8 +17,11 @@ const initialDigipet: Digipet = {
  */
 export let _userDigipet: Digipet | undefined;
 
+/**
+ * Get the data for the user digipet (if it exists) - but not the underlying object reference (to protect the data from accidental changes)
+ */
 export function getDigipet(): Digipet | null {
-  // spread to avoid mutating
+  // spread to create a shallow copy
   return _userDigipet ? { ..._userDigipet } : null;
 }
 
@@ -41,14 +44,17 @@ export function updateDigipetBounded(
   digipetKey: keyof Digipet,
   netUpdate: number
 ): void {
-  if (_userDigipet) {
-    const valueToBound = _userDigipet[digipetKey] + netUpdate;
+  const digipetData = getDigipet(); // is a shallow copy
+  if (digipetData) {
+    const valueToBound = digipetData[digipetKey] + netUpdate;
     if (valueToBound > 100) {
-      _userDigipet[digipetKey] = 100;
+      digipetData[digipetKey] = 100;
     } else if (valueToBound < 0) {
-      _userDigipet[digipetKey] = 0;
+      digipetData[digipetKey] = 0;
     } else {
-      _userDigipet[digipetKey] = valueToBound;
+      digipetData[digipetKey] = valueToBound;
     }
+    // shallow copy has updated values to set
+    setDigipet(digipetData);
   }
 }
