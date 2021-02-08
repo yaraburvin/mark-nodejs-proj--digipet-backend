@@ -1,8 +1,8 @@
-import { getDigipet, updateDigipetBounded } from "./model";
+import { updateDigipetBounded } from "./model";
+
+export function feedDigipet(): void {}
 
 export function walkDigipet(): void {
-  if (getDigipet()) {
-    updateDigipetBounded("happiness", 10);
-    updateDigipetBounded("nutrition", -5);
-  }
+  updateDigipetBounded("happiness", 10);
+  updateDigipetBounded("nutrition", -5);
 }
