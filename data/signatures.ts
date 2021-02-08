@@ -19,14 +19,14 @@ const initialSignature: TimestampedSignature = {
   message: "wubba lubba dub dub!!",
 };
 
-const signatures: SignatureCollection = {
+const _signatures: SignatureCollection = {
   // included to start off with a signature
   // and also indicate intended usage
   [initialSignature.timestamp]: initialSignature,
 };
 
 export function getSignatures(): SignatureCollection {
-  return signatures;
+  return _signatures;
 }
 
 export function getSignaturesArr(): TimestampedSignature[] {
@@ -35,24 +35,24 @@ export function getSignaturesArr(): TimestampedSignature[] {
 
 export function addSignature(signature: Signature): void {
   const newTimestamp = new Date().toUTCString();
-  signatures[newTimestamp] = {
+  _signatures[newTimestamp] = {
     ...signature,
     timestamp: newTimestamp,
   };
 }
 
 export function deleteSignatureByTimestamp(timestamp: string): void {
-  delete signatures[timestamp];
+  delete _signatures[timestamp];
 }
 
 export function updateSignatureByTimestamp(
   timestamp: string,
   updatedSignature: Signature
 ) {
-  signatures[timestamp] = {
+  _signatures[timestamp] = {
     ...updatedSignature,
     timestamp,
   };
 }
 
-export default signatures;
+export default _signatures;
