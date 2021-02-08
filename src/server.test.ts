@@ -55,4 +55,22 @@ describe("Endpoint testing", () => {
     // check that it has added a number timestamp
     expect(typeof response.body.data.signature.epochTimestamp).toBe("number");
   });
+
+  test("GET /signatures finds the newly created signature", async () => {
+    const response = await supertest(app).get("/signatures");
+
+    // check that it's a 200 response
+    expect(response.status).toBe(200);
+
+    // check the overall structure of the response
+    expect(response.body).toMatchObject({
+      status: "success",
+      data: {
+        signatures: [{ name: "Rick" }, { name: "Morty" }],
+      },
+    });
+
+    // check that it comes back with exactly two signatures now
+    expect(response.body.data.signatures).toHaveLength(2);
+  });
 });

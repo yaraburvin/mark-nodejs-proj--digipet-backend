@@ -16,12 +16,16 @@ export function getSignaturesArr(): TimestampedSignature[] {
   return Object.values(getSignatures());
 }
 
-export function addSignature(signature: Signature): void {
+export function addSignature(signature: Signature): TimestampedSignature {
+  console.log("adding signature", signature);
+
   const newTimestamp = new Date().getTime();
-  _signatures[newTimestamp] = {
+  const newSignature = {
     ...signature,
     epochTimestamp: newTimestamp,
   };
+  _signatures[newTimestamp] = newSignature;
+  return newSignature;
 }
 
 export function deleteSignatureByTimestamp(timestamp: string): void {
