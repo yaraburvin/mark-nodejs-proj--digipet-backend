@@ -1,5 +1,6 @@
 import express from "express";
-import { getDigipet, resetDigipet, walkDigipet } from "./digipet";
+import { getDigipet, resetDigipet } from "./digipet/model";
+import { walkDigipet } from "./digipet/controller";
 
 const app = express();
 
