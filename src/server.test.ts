@@ -62,6 +62,10 @@ describe("action routes", () => {
     };
 
     for (let [route, controller] of Object.entries(routesAndControllers)) {
+      // reset mock of the controller
+      if (jest.isMockFunction(controller) /* type guard */) {
+        controller.mockReset();
+      }
       setDigipet(undefined);
       const response = await supertest(app).get(route);
       expect(response.body.message).toMatch(/you don't have/i);
@@ -70,9 +74,7 @@ describe("action routes", () => {
       expect(response.body.message).toMatch("/digipet/hatch");
 
       // expect relevant controller not to have been called
-      if (jest.isMockFunction(controller) /* type guard */) {
-        expect(controller).toHaveBeenCalledTimes(0);
-      }
+      expect(controller).toHaveBeenCalledTimes(0);
     }
   });
 
