@@ -4,11 +4,12 @@ export interface Digipet {
   discipline: number;
 }
 
-export const INITIAL_DIGIPET: Digipet = {
+const initialDigipet: Digipet = {
   happiness: 50,
   nutrition: 50,
   discipline: 50,
 };
+export const INITIAL_DIGIPET = Object.freeze(initialDigipet);
 
 /**
  * The user's digipet (if they have one).

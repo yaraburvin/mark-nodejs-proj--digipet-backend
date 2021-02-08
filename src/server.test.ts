@@ -25,4 +25,20 @@ describe("GET /digipet", () => {
   });
 });
 
+describe("GET /digipet/hatch", () => {
+  test("if the user has a digipet, it responds with a message explaining that a digipet can't be hatched whilst the user has another", async () => {
+    resetDigipet();
+    const response = await supertest(app).get("/digipet/hatch");
+    expect(response.body.message).toMatch(/can't hatch/i);
+  });
+
+  test("if the user has no digipet, it responds with a message about successfully hatching a digipet, and default digipet data", async () => {
+    setDigipet(undefined);
+    const response = await supertest(app).get("/digipet");
+    expect(response.body.digipet).toStrictEqual(INITIAL_DIGIPET);
+    expect(response.body.message).toMatch(/success/i);
+    expect(response.body.message).toMatch(/hatch/i);
+  });
+});
+
 // neill testing down here
