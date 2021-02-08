@@ -53,21 +53,26 @@ describe("GET /digipet/hatch", () => {
 });
 
 describe("action routes", () => {
-  test("if the user has no digipet, responds with a message suggesting that the user can't do the action until they have hatched a digipet", async () => {
-    const routes = [
-      // "/digipet/feed",
-      // "/digipet/ignore",
-      // "/digipet/train",
-      "/digipet/walk",
-    ];
+  test("if the user has no digipet, responds with a message suggesting that the user can't do the action until they have hatched a digipet and does not call the relevant controller", async () => {
+    const routesAndControllers = {
+      // "/digipet/feed": feedDigipet,
+      // "/digipet/ignore": ignoreDigipet,
+      // '/digipet/train': trainDigipet,
+      "/digipet/walk": walkDigipet,
+    };
 
-    for (let route of routes) {
+    for (let [route, controller] of Object.entries(routesAndControllers)) {
       setDigipet(undefined);
       const response = await supertest(app).get(route);
       expect(response.body.message).toMatch(/you don't have/i);
       expect(response.body.message).toMatch(/try/i);
       // suggest a helpful endpoint
       expect(response.body.message).toMatch("/digipet/hatch");
+
+      // expect relevant controller not to have been called
+      if (jest.isMockFunction(controller) /* type guard */) {
+        expect(controller).toHaveBeenCalledTimes(0);
+      }
     }
   });
 
