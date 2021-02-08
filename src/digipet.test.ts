@@ -18,6 +18,8 @@ describe("getDigipet", () => {
     expect(getDigipet()).toStrictEqual(digipetTest);
     expect(getDigipet()).not.toBe(digipetTest);
   });
+
+  // it("returns null if ");
 });
 
 describe("updateDigipetBounded", () => {
@@ -142,24 +144,6 @@ describe("updateDigipetBounded", () => {
   });
 });
 
-describe("setDigipet", () => {
-  it("reassigns the _userDigipet variable to the passed in argument", () => {
-    const sampleDigipet: Digipet = {
-      happiness: 100,
-      nutrition: 80,
-      discipline: 30,
-    };
-
-    // different reference before execution
-    expect(_userDigipet).not.toBe(sampleDigipet);
-
-    setDigipet(sampleDigipet);
-
-    // same reference after execution
-    expect(_userDigipet).toBe(sampleDigipet);
-  });
-});
-
 describe("resetDigipet", () => {
   it("resets all digipet stats to 50", () => {
     // test setup
@@ -186,5 +170,28 @@ describe("resetDigipet", () => {
       nutrition: 50,
       discipline: 50,
     });
+  });
+});
+
+describe("setDigipet", () => {
+  it("reassigns the _userDigipet variable to a passed in argument", () => {
+    const sampleDigipet: Digipet = {
+      happiness: 100,
+      nutrition: 80,
+      discipline: 30,
+    };
+
+    // different reference before execution
+    expect(_userDigipet).not.toBe(sampleDigipet);
+
+    setDigipet(sampleDigipet);
+
+    // same reference after execution
+    expect(_userDigipet).toBe(sampleDigipet);
+  });
+
+  it("reassigns the _userDigipet variable to undefined when no argument passed in", () => {
+    setDigipet();
+    expect(_userDigipet).toBeUndefined();
   });
 });

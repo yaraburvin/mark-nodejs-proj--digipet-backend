@@ -27,7 +27,7 @@ export function resetDigipet(): void {
   _userDigipet = { ...initialDigipet };
 }
 
-export function setDigipet(newDigipet: Digipet): void {
+export function setDigipet(newDigipet?: Digipet): void {
   _userDigipet = newDigipet;
 }
 
