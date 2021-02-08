@@ -16,9 +16,12 @@ export function getSignaturesArr(): TimestampedSignature[] {
   return Object.values(getSignatures());
 }
 
+/**
+ * Adds a given signature into the database, returning the added data (including an id, which is the timestamp)
+ *
+ * @param signature Data to be added into the Signature database
+ */
 export function addSignature(signature: Signature): TimestampedSignature {
-  console.log("adding signature", signature);
-
   const newTimestamp = new Date().getTime();
   const newSignature = {
     ...signature,
