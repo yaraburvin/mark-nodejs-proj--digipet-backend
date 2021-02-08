@@ -51,6 +51,11 @@ app.get("/digipet/walk", (req, res) => {
       message: "You walked your digipet. It looks happier now!",
       digipet: getDigipet(),
     });
+  } else {
+    res.json({
+      message:
+        "You don't have a digipet to walk! Try hatching one with /digipet/hatch",
+    });
   }
 });
 
