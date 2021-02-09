@@ -9,153 +9,96 @@ We're going to be interpreting and extending a server using TDD.
 ## Learning Outcomes
 
 - Test HTTP GET requests with supertest
-- Distinguish between unit tests and end-to-end tests
+- Distinguish between unit tests and non-unit tests (either integration tests or end-to-end tests)
 
-## Exercise 1: Installing and running
+# Exercise 1: Reading, understanding and documenting
 
-**Success criterion:** you can view evidence your server is running at `localhost:4000`
+> 🎯 **Success criterion:** a document which outlines how you think this Express server works. You don't have to achieve a theory which explains 100%, but you should strive to explain as much as possible.
 
-Firstly, clone this repository to your local machine in some sensible place, for example:
+1. Clone/fork the repo
+2. Take some time to read and digest the code
+3. Explore and run the tests
+4. Play around with it via Postman
+5. Google things that you don't understand
+6. Experiment with changing things
+7. Produce a narrative document
 
-```bash
-cd ~/Development/Academy # or wherever you're organising everything
-git clone https://github.com/WeAreAcademy/my-little-server.git my-little-server
-```
+## Making sense of the tests
 
-Then, change into the new directory and install the files:
+There are [lots of different types of testing](https://www.atlassian.com/continuous-delivery/software-testing/types-of-software-testing).
 
-```bash
-cd my-little-server
-yarn
-```
+In this exercise, we're focusing on two types:
 
-Finally, run your first Express server!
+1. Unit tests
+2. Non-unit tests
+   1. Integration tests
+   2. End-to-end (E2E) tests
 
-```bash
-yarn start
-```
+Whilst there is a distinction between integration and E2E tests, for now, we'll lump them together under 'non-unit tests', and focus on distinguishing between unit and non-unit tests.
 
-The `start` script is configured such that the Express server will run by default on your local machine at `localhost:4000`.
+Start by reading [this Google blog on unit vs E2E tests](https://testing.googleblog.com/2015/04/just-say-no-to-more-end-to-end-tests.html).
 
-You will need to manually confirm this through visiting `localhost:4000` in your browser. You can also visit some different endpoints which are defined, e.g. `localhost:4000/current-time`.
+Once you have read that, we'll consider how types of test manifest in the codebase.
 
-(If the server is not running - either because you have not yet started it or you have closed it - then trying to access `localhost:4000` will give you a connection failure.)
+### Testing walking a digipet
 
-## Exercise 1b: Stopping and restarting the server
+Let's look at how we're testing "walking a digipet".
 
-Close the server with `Ctrl + C` in the terminal where it is running.
+The desired behaviour of walking a digipet is:
 
-Restart it using the same command as before:
+1. If we have a digipet, we should be able to walk our digipet through the `/digipet/walk` endpoint
+   1. _Data change_: Walking a digipet should increase its happiness by `10` and decrease its nutrition by `5` (to model needing to replenish energy)
+      1. Happiness can increase only as far as to `100`
+      2. Nutrition can decrease only as far as to `0`
+   2. _Server response_: The endpoint should respond with a message indicating that the digipet has been taken for a walk
+2. If we don't have a digipet, the `/digipet/walk` endpoint doesn't walk any digipet
+   1. _Server response_: The endpoint should respond with a message indicating that it isn't possible to walk a non-existent digipet
 
-```bash
-yarn start
-```
+Server response and data change are two different jobs, so it is helpful to reason about them and write them as separate bits of functionality.
 
-## Exercise 2: Reading, understanding and documenting
+It also makes sense to therefore test them separately. If the overall 'walking a digipet' behaviour is not working as expected, it's helpful to have focused tests which tell us more precisely which part of it is not working as expected.
 
-**Success criterion:** a document which outlines how you think this Express server works. You don't have to achieve a theory which explains 100%, but you should strive to explain as much as possible.
+We might divide up the tests as follows:
 
-(N.B.: The _correctness_ of your theory is **much less important** than the _process_ of forming this document. [Forming a prediction, and then discovering it was wrong, is an effective way to learn](https://www.sciencedirect.com/science/article/abs/pii/S0959475217303468)!)
+**1. _Data change:_ Does the `walkDigipet` controller function change Digipet stats as expected?**
 
-1. Take some time to read and digest the code
-2. Google things that you don't understand
-3. Experiment with changing things
-4. Produce a narrative document
+We could test a `walkDigipet` function that should:
 
-A good narrative document for this program would explain what code gets executed when the server is started, and what code gets executed when different endpoints are hit - and how what you see in your browser (as the server response) either changes / does not change on subsequent requests depending on the route.
+1. Increases the digipet's happiness by `10`, up to ceiling of `100`
+2. Decreases the digipet's nutrition by `5`, down to a floor of `0`
 
-(Some routes will give you back the same response each time, and others won't. Why is that?)
+This is tested as isolated behaviour in `src/digipet/controller.test.ts`.
 
-## Exercise 3: Viewing in Postman
+This is _unit testing_.
 
-> 🎯 **Success criterion:** you can make GET requests to all endpoints in `server.ts` via Postman
+**2. _Server response:_ Does the server's `/digipet/walk` endpoint give back a sensible response?**
 
-[Postman](https://www.postman.com/) is a commonly-used tool for supporting server endpoint development (sometimes referred to as API development).
+We could test a `/digipet/walk` endpoint that should:
 
-### Downloading Postman
+1. Sends back an acknowledgement message about walking the digipet when we have one
+2. Sends back a helpful message explaining that we can't walk a digipet when we don't have one
+3. Delegates actual data change to the `walkDigipet` function
 
-If you are on Windows or MacOS, you can [download the desktop app straightforwardly from the Postman website](https://www.postman.com/downloads/).
+This is tested as isolated behaviour in `src/digipet/controller.test.ts`.
 
-If you are on Amazon Linux (the Linux distribution used by Amazon Workspaces), you will need to:
+This is _unit testing_.
 
-1. Install `snap` with [a (long) one-liner](https://www.bonusbits.com/wiki/HowTo:Install_Snap_on_Amazon_Linux_Workspace#One_Liner)
-2. Run `sudo snap install postman`
+**3. Does this come together as expected?**
 
-### Sending requests with Postman
+There are three sets of tests related to this, in three different files:
 
-Read and follow [this guide from Postman](https://learning.postman.com/docs/getting-started/sending-the-first-request/) on sending requests.
+- `src/server.test.ts` - unit tests for server endpoints
+- `src/digipet/controller.test.ts` - unit tests for controller functions
+- `src/__tests__/walking.e2e.test.ts` - E2E tests
 
-Don't worry too much right now about the different types of requests - we're focusing on `GET` requests (which is why there is `app.get` all over the place in `server.ts`, to handle GET requests). (If you want to read ahead, [MDN has some good docs on HTTP request types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods).)
+We're
 
-Once you've made your first `GET` request as per the Postman docs, try making `GET` requests to some of the following:
+EXERCISES
 
-- `localhost:4000`
-- `localhost:4000/hits`
-- `localhost:4000/hits-stealth`
-
-etc
-
-## Exercise 4: Writing your own Express route
-
-> 🎯 **Success criterion:** you can visit `localhost:5050/hello-world`, `localhost:5050/ponies/random` and `localhost:5050/history` in the browser, with the expected behaviour below.
-
-Now, you're going to try making changes to the server - in particular, you're going to try adding some endpoints of your own.
-
-> ⚠️ Restart your server for changes to come into effect. Once you have started your server, any changes you make to its source code are not taken into consideration until the next time you (re)start the server. Alternatively, instead of running the server with `yarn start` (which uses `ts-node`), you can run the server with the `start:dev` script which we've added - it uses `ts-node-dev` to watch the source code and automatically restart it when there are changes.
-
-### `/hello-world`
-
-Should respond with the following JSON data:
-
-```json
-{
-  "english": "Hello world!",
-  "esperanto": "Saluton mondo!",
-  "hawaiian": "Aloha Honua",
-  "turkish": "Merhaba Dünya!"
-}
-```
-
-### `/ponies/random`
-
-Shows a _single_ random pony from `ponies.json`. It should be possible to hit the route twice and get back two different ponies.
-
-### `/history`
-
-Shows a list of which (active) routes have been hit in chronological order.
-
-For example, if you visited the following routes after starting your server:
-
-- `/ponies`
-- `/hits`
-- `/history`
-- `/um-what-is-this`
-- `/`
-- `/history`
-
-Then the response should be something like:
-
-```js
-{
-  "routes": [
-    "/ponies",
-    "/hits",
-    "/history",
-    "/",
-    "/history"
-  ]
-}
-```
-
-(where `/um-what-is-this` is ignored, because it isn't a defined server endpoint)
-
-## Exercise 5: Check your understanding
-
-> 🎯 **Success criterion:** a conversation with a Faculty member and amended comments.
-
-Talk to a member of Faculty about your understanding of the server and of TypeScript.
-
-Amend your notes for any important points that come out of the conversation.
+- Make training pass - controller first, then server
+- Make feeding pass - server first, then controller
+- Add tests for ignoring (E2E and unit)
+-
 
 ## Exercise 6: Commentary and reflection
 
