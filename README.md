@@ -1,33 +1,15 @@
----
-module: mark-nodejs
-
-level: 1
-
-methods:
-  - team
-  - pair
-  - solo
-
-tags:
-  - wip
----
-
-# My Little Server
+# Digipet
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
 
 > This is part of Academy's [technical curriculum for **The Mark**](https://github.com/WeAreAcademy/curriculum-mark). All parts of that curriculum, including this project, are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
 
-We're now going to run your first server and play around with a few existing **endpoints** that it has.
+We're going to be interpreting and extending a server using TDD.
 
 ## Learning Outcomes
 
-- Run an Express server locally
-- Send back a JSON response in an Express route handler
-- Identify when a route handler function is executed
-- Test HTTP GET requests in the browser
-- Test HTTP GET requests in Postman
 - Test HTTP GET requests with supertest
+- Distinguish between unit tests and end-to-end tests
 
 ## Exercise 1: Installing and running
 
