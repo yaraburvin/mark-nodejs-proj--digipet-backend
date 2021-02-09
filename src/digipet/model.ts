@@ -24,7 +24,11 @@ export const INITIAL_DIGIPET = Object.freeze(initialDigipet);
 /**
  * The user's digipet (if they have one).
  *
- * Exported purely to _test_ `setDigipet` (which should be used as an encapsulation over setting this variable directly).
+ * Avoid directly manipulating this - you should access it through the getter (getDigipet) and update it through the setter (setDigipet).
+ *
+ * (This is encapsulation: https://refactoring.guru/encapsulate-field)
+ *
+ * The variable is exported purely to _test_ `setDigipet`.
  */
 export let _userDigipet: Digipet | undefined;
 
@@ -32,7 +36,7 @@ export let _userDigipet: Digipet | undefined;
  * Get the data for the user digipet (if it exists) - but not the underlying object reference (to protect the data from accidental changes)
  */
 export function getDigipet(): Digipet | null {
-  // spread to create a shallow copy
+  // spread to create a shallow copy to avoid mutation
   return _userDigipet ? { ..._userDigipet } : null;
 }
 
