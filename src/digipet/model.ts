@@ -1,5 +1,5 @@
 /**
- * The core Digipet type and methods.
+ * The core Digipet functions.
  *
  * These are encapsulated over in controller.ts
  */

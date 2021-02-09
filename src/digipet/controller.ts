@@ -1,10 +1,10 @@
+import { updateDigipetBounded } from "./model";
+
 /**
  * The actions that your Digipet game supports.
  *
  * These update the underlying digipet by using the functions defined in model.ts
  */
-
-import { updateDigipetBounded } from "./model";
 
 export function feedDigipet(): void {}
 
