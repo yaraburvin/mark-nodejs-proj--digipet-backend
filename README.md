@@ -23,6 +23,23 @@ We're going to be interpreting and extending a server using TDD.
 6. Experiment with changing things
 7. Produce a narrative document
 
+## Making sense of the structure
+
+### `/digipet` vs `server.ts`
+
+The `/digipet` folder is for all functions that read or update digipet data.
+
+The job of `server.ts` is to set up our server endpoints and dictate server responses (and sometimes calling a function from `/digipet` to make side-effects happen).
+
+### Model vs Controller
+
+Some software architectural patterns distinguish between 'Model' and 'Controller' (a famous pattern is MVC: Model-View-Controller).
+
+We're not formally using MVC (e.g. it's traditionally object-oriented, which this example is not). However, we're repurposing its vocabulary to make an approximate distinction between things in our digipet code:
+
+- _Model_: the code that creates the _levers_ which can be pulled to read/update digipet data
+- _Controller_: the functions that pull the digipet model's levers in order to effect changes
+
 ## Making sense of the tests
 
 There are [lots of different types of testing](https://www.atlassian.com/continuous-delivery/software-testing/types-of-software-testing).
@@ -79,9 +96,11 @@ We could test a `/digipet/walk` endpoint that should:
 2. Sends back a helpful message explaining that we can't walk a digipet when we don't have one
 3. Delegates actual data change to the `walkDigipet` function
 
-This is tested as isolated behaviour in `src/digipet/controller.test.ts`.
+This is tested as isolated behaviour in `src/server.test.ts`.
 
-This is _unit testing_.
+This is, again, _unit testing_ - this time, we're unit testing server endpoints rather thean .
+
+Importantly, even though we're testing
 
 **3. Does this come together as expected?**
 
