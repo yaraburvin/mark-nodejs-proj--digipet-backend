@@ -46,39 +46,6 @@ describe.skip("feedDigipet", () => {
   });
 });
 
-describe.skip("ignoreDigipet", () => {
-  it("decreases all values by 10", () => {
-    // setup
-    resetDigipet();
-    expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
-
-    // act
-    ignoreDigipet();
-
-    // assert
-    expect(getDigipet()).toStrictEqual({
-      happiness: INITIAL_DIGIPET.happiness - 10,
-      nutrition: INITIAL_DIGIPET.nutrition - 10,
-      discipline: INITIAL_DIGIPET.discipline - 10,
-    });
-  });
-
-  it("cannot decrease values below 0", () => {
-    // setup
-    setDigipet({ happiness: 5, nutrition: 5, discipline: 5 });
-
-    // act
-    ignoreDigipet();
-
-    // assert
-    expect(getDigipet()).toStrictEqual({
-      happiness: 0,
-      nutrition: 0,
-      discipline: 0,
-    });
-  });
-});
-
 describe.skip("trainDigipet", () => {
   it("increases digipet discipline by 10 and decreases happiness by 5", () => {
     // setup
