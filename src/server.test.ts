@@ -72,38 +72,12 @@ describe("GET /digipet/hatch", () => {
 });
 
 describe("action routes", () => {
-  describe.skip("GET /digipet/ignore", () => {
-    test("if the user has a digipet, it calls the ignoreDigipet controller and responds with a message about ignoring the digipet", async () => {
-      // setup: reset digipet and mock function
-      resetDigipet();
-      if (jest.isMockFunction(ignoreDigipet) /* type guard */) {
-        ignoreDigipet.mockReset();
-      }
-
-      const response = await supertest(app).get("/digipet/ignore");
-
-      // mock function has been called once
-      expect(ignoreDigipet).toHaveBeenCalledTimes(1);
-
-      // response includes a relevant message
-      expect(response.body.message).toMatch(/ignor/i);
-
-      // response includes digipet data
-      expect(response.body.digipet).toHaveProperty("happiness");
-      expect(response.body.digipet).toHaveProperty("nutrition");
-      expect(response.body.digipet).toHaveProperty("discipline");
-    });
-  });
-
   describe.skip("GET /digipet/feed", () => {
     test("if the user has a digipet, it calls the feedDigipet controller and responds with a message about feeding the digipet", async () => {
       // setup: reset digipet
       resetDigipet();
 
       const response = await supertest(app).get("/digipet/feed");
-
-      // mock function has been called once
-      expect(feedDigipet).toHaveBeenCalledTimes(1);
 
       // response includes a relevant message
       expect(response.body.message).toMatch(/feed/i);
@@ -112,6 +86,18 @@ describe("action routes", () => {
       expect(response.body.digipet).toHaveProperty("happiness");
       expect(response.body.digipet).toHaveProperty("nutrition");
       expect(response.body.digipet).toHaveProperty("discipline");
+    });
+
+    it("delegates state change to the feedDigipet function", async () => {
+      // setup: reset digipet and mock function
+      resetDigipet();
+      if (jest.isMockFunction(feedDigipet) /* type guard */) {
+        feedDigipet.mockReset();
+      }
+      // act
+      await supertest(app).get("/digipet/feed");
+      // assert
+      expect(feedDigipet).toHaveBeenCalledTimes(1);
     });
   });
 
