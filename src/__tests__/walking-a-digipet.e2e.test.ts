@@ -87,3 +87,28 @@ describe("When a user walks a digipet repeatedly, its nutrition decreases by 5 e
     expect(response.body.digipet).toHaveProperty("nutrition", 0);
   });
 });
+
+describe("When a digipet is maxed out on happiness, it is still possible to walk it and decrease its nutrition", () => {
+  beforeAll(() => {
+    // setup: give an initial digipet
+    const startingDigipet: Digipet = {
+      happiness: 100,
+      nutrition: 50,
+      discipline: 50,
+    };
+    setDigipet(startingDigipet);
+  });
+
+  test("GET /digipet informs them that they have a digipet with expected stats", async () => {
+    const response = await supertest(app).get("/digipet");
+    expect(response.body.message).toMatch(/your digipet/i);
+    expect(response.body.digipet).toHaveProperty("happiness", 100);
+    expect(response.body.digipet).toHaveProperty("nutrition", 50);
+  });
+
+  test("GET /digipet/walk shows that happiness remains at 100 but nutrition has decreased", async () => {
+    const response = await supertest(app).get("/digipet/walk");
+    expect(response.body.digipet).toHaveProperty("happiness", 100);
+    expect(response.body.digipet).toHaveProperty("nutrition", 45);
+  });
+});
