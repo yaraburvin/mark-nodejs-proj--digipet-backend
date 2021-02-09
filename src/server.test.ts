@@ -8,9 +8,17 @@ import {
 import { INITIAL_DIGIPET, resetDigipet, setDigipet } from "./digipet/model";
 import app from "./server";
 
-// mock all imports from './digipet/controller'
-// mocking: https://circleci.com/blog/how-to-test-software-part-i-mocking-stubbing-and-contract-testing/
-// mocking in jest: https://jestjs.io/docs/en/jest-object#jestmockmodulename-factory-options
+/**
+ * The below line mock all imports from './digipet/controller'.
+ *
+ * We're mocking here for separation of concerns - we're testing the rough structure of server responses and whether they're calling the right controllers, but we don't care here what the controllers do.
+ *
+ * (There's a separate suite of integration tests that tests endpoint responses _and_ side effects.)
+ *
+ * On mocking: https://circleci.com/blog/how-to-test-software-part-i-mocking-stubbing-and-contract-testing/
+ *
+ * On mocking in jest: https://jestjs.io/docs/en/jest-object#jestmockmodulename-factory-options
+ */
 jest.mock("./digipet/controller");
 
 describe("GET /", () => {
