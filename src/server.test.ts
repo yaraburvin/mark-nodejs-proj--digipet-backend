@@ -72,6 +72,32 @@ describe("GET /digipet/hatch", () => {
 });
 
 describe("action routes", () => {
+  test("when the user does not have a digipet, action routes direct them to hatch a digipet and do not call their relevant controllers", async () => {
+    const routesAndControllers = {
+      /* test for these once written */
+      // "/digipet/feed": feedDigipet,
+      // "/digipet/ignore": ignoreDigipet,
+      // '/digipet/train': trainDigipet,
+      "/digipet/walk": walkDigipet,
+    };
+
+    for (let [route, controller] of Object.entries(routesAndControllers)) {
+      // reset mock of the controller
+      if (jest.isMockFunction(controller) /* type guard */) {
+        controller.mockReset();
+      }
+      setDigipet(undefined);
+      const response = await supertest(app).get(route);
+      expect(response.body.message).toMatch(/you don't have/i);
+      expect(response.body.message).toMatch(/try/i);
+      // suggest a helpful endpoint
+      expect(response.body.message).toMatch("/digipet/hatch");
+
+      // expect relevant controller not to have been called
+      expect(controller).toHaveBeenCalledTimes(0);
+    }
+  });
+
   describe.skip("GET /digipet/feed", () => {
     test("if the user has a digipet, it calls the feedDigipet controller and responds with a message about feeding the digipet", async () => {
       // setup: reset digipet
