@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 app.get("/instructions", (req, res) => {
   res.json({
     message:
-      "You can check out your digipet's stats with /digipet, and add various actions after that with the /digipet/[action]: walk, train, feed, ignore and hatch. For example, try /digipet/walk to walk a digipet!",
+      "You can check out your digipet's stats with /digipet, and add various actions after that with the /digipet/[action], for actions like walk, train, feed, ignore and hatch. For example, try /digipet/walk to walk a digipet!",
   });
 });
 
