@@ -4,8 +4,8 @@
   "scripts": {
     "start": "ts-node src",
     "start:dev": "ts-node-dev src",
-    "test": "jest --watch",
-    "test:no-watch": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "author": "",
   "license": "CC-BY-NC-ND-4.0",
