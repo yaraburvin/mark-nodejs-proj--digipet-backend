@@ -29,7 +29,7 @@ describe("When a user walks a digipet repeatedly, its happiness increases by 10 
     expect(response.body.digipet).toHaveProperty("happiness", 75);
   });
 
-  test("1st GET /digipet/walk informs them about the walk and shows increase happiness and decreased nutrition for digipet", async () => {
+  test("1st GET /digipet/walk informs them about the walk and shows increase happiness", async () => {
     const response = await supertest(app).get("/digipet/walk");
     expect(response.body.digipet).toHaveProperty("happiness", 85);
   });
