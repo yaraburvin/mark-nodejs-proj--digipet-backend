@@ -37,8 +37,10 @@ Some software architectural patterns distinguish between 'Model' and 'Controller
 
 We're not formally using MVC (e.g. it's traditionally object-oriented, which this example is not). However, we're repurposing its vocabulary to make an approximate distinction between things in our digipet code:
 
-- _Model_: the code that creates the _levers_ which can be pulled to read/update digipet data
-- _Controller_: the functions that pull the digipet model's levers in order to effect changes
+- _Model_: the code that creates the _levers_ which can be pulled to read/update digipet data (the puppet with strings)
+- _Controller_: the functions that pull the digipet model's levers in order to effect changes (the puppeteer pulling strings)
+
+For example: `walkDigipet` is a descriptive controller function which calls the `updateDigipetBounded` model function.
 
 ## Making sense of the tests
 
@@ -86,7 +88,9 @@ We could test a `walkDigipet` function that should:
 
 This is tested as isolated behaviour in `src/digipet/controller.test.ts`.
 
-This is _unit testing_.
+> 🧠 Make sure that you can find the relevant test.
+
+This is _unit testing_: tightly focused to a single function behaviour, and not dependent on the behaviour of other functions.
 
 **2. _Server response:_ Does the server's `/digipet/walk` endpoint give back a sensible response?**
 
@@ -98,9 +102,11 @@ We could test a `/digipet/walk` endpoint that should:
 
 This is tested as isolated behaviour in `src/server.test.ts`.
 
-This is, again, _unit testing_ - this time, we're unit testing server endpoints rather thean .
+> 🧠 Make sure that you can find the relevant test.
 
-Importantly, even though we're testing
+This is, again, _unit testing_: tightly focused to a single endpoint, and not dependent on the behaviour of other endpoints or functions.
+
+(Importantly: this unit test _does not care at all_ about the implementation or behaviour of `walkDigipet`. It tests that `walkDigipet` gets _called_, but it would be possible for us to entirely change the behaviour of `walkDigipet` and our endpoint unit test would not break.)
 
 **3. Does this come together as expected?**
 
