@@ -30,7 +30,13 @@ describe("User can hatch a digipet and inspect it when they don't currently have
     );
   });
 
-  test("GET /digipet/hatch informs them that they can't hatch another digipet whilst they still have one", async () => {
+  test("GET /digipet now informs them that they don't currently have a digipet", async () => {
+    const response = await supertest(app).get("/digipet");
+    expect(response.body.message).toMatch(/your digipet/i);
+    expect(response.body.digipet).toBeDefined();
+  });
+
+  test("GET /digipet/hatch now informs them that they can't hatch another digipet whilst they still have one", async () => {
     const response = await supertest(app).get("/digipet/hatch");
     expect(response.body.message).not.toMatch(/success/i);
     expect(response.body.message).toMatch(/can't hatch/i);
