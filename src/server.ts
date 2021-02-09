@@ -11,6 +11,13 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/instructions", (req, res) => {
+  res.json({
+    message:
+      "You can check out your digipet's stats with /digipet, and add various actions after that with the /digipet/[action]: walk, train, feed, ignore and hatch. For example, try /digipet/walk to walk a digipet!",
+  });
+});
+
 app.get("/digipet", (req, res) => {
   const digipet = getDigipet();
   if (digipet) {
@@ -57,13 +64,6 @@ app.get("/digipet/walk", (req, res) => {
         "You don't have a digipet to walk! Try hatching one with /digipet/hatch",
     });
   }
-});
-
-app.get("/digipet/reset", (req, res) => {
-  res.json({
-    message:
-      "Are you sure you want to reset your digipet? It's a bit inhumane, in all honesty. Please visit /digipet/reset/confirm to confirm that you want to reset your digipet. This cannot be undone!",
-  });
 });
 
 export default app;

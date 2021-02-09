@@ -22,9 +22,20 @@ import app from "./server";
 jest.mock("./digipet/controller");
 
 describe("GET /", () => {
-  it("provides a link to instructions in the response body", async () => {
+  it("provides a nod to instructions in the response body", async () => {
     const response = await supertest(app).get("/");
     expect(response.body.message).toMatch("/instructions");
+  });
+});
+
+describe("GET /instructions", () => {
+  it("responds with a message that has important keywords", async () => {
+    const response = await supertest(app).get("/instructions");
+    const keywords = ["/digipet", "hatch", "feed", "ignore", "train", "walk"];
+    for (let keyword of keywords) {
+      // check the keyword is mentioned in the response body
+      expect(response.body.message).toMatch(keyword);
+    }
   });
 });
 
@@ -63,6 +74,7 @@ describe("GET /digipet/hatch", () => {
 describe("action routes", () => {
   test("if the user has no digipet, responds with a message suggesting that the user can't do the action until they have hatched a digipet and does not call the relevant controller", async () => {
     const routesAndControllers = {
+      /* test for these once written */
       // "/digipet/feed": feedDigipet,
       // "/digipet/ignore": ignoreDigipet,
       // '/digipet/train': trainDigipet,
