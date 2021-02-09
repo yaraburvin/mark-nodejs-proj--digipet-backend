@@ -20,7 +20,7 @@ describe("getDigipet", () => {
   });
 
   it("returns null if there is no digipet", () => {
-    setDigipet(); // sets digipet to undefined
+    setDigipet(undefined);
     expect(getDigipet()).toBeNull();
   });
 });
