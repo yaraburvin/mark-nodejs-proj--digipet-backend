@@ -159,13 +159,18 @@ Try the following two approaches:
 1. For training the digipet, start with making the `trainDigipet` unit tests pass and then move onto the `/digipet/train` unit tests
 2. For feeding the digipet, start with making the `/digipet/feed` unit tests pass and then move onto the `/digipet/feed` unit tests
 
-EXERCISES
+## Exercise 2: Test-driven development on the backend - adding your own tests
 
-- Make training pass - controller first, then server
-- Make feeding pass - server first, then controller
-- Add tests for ignoring (E2E and unit)
--
+> 🎯 **Success criterion:** you have added passing tests for ignoring the digipet following the below criteria
 
-## Exercise 6: Commentary and reflection
+Now, we've added to walking, training and feeding the digipet to our game - we'll now add ignoring the digipet (which leads to its sad deterioration).
 
-**Success criterion:** documented reflections.
+The desired behaviour is as follows:
+
+1. GIVEN that the user does not have a digipet, WHEN they send a `GET` request to the `/digipet/ignore` endpoint, THEN the server responds with a message informing them that they don't have a digipet and suggesting that they try hatching one
+2. GIVEN that the user has a digipet with all stats above `10`, WHEN they send a `GET` request to the `/digipet/ignore` endpoint, THEN the server responds with a message confirming that they have ignored their digipet and includes digipet stats that show a decrease in all stats by `10`
+3. GIVEN that the user has a digipet with some stats below `10`, WHEN they send a `GET` request to the `/digipet/ignore` endpoint, THEN the server responds with a message confirming that they have ignored their digipet and includes digipet stats that have decreased by `10` down to a possible floor of `0`
+
+## Exercise 3: Commentary and reflection
+
+> 🎯 **Success criterion:** documented reflections.
