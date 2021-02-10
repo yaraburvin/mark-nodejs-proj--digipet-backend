@@ -9,7 +9,9 @@ We're going to be interpreting and extending a server using TDD.
 ## Learning Outcomes
 
 - Test HTTP GET requests with supertest
-- Distinguish between unit tests and non-unit tests (either integration tests or end-to-end tests)
+- Distinguish between unit tests and integration tests
+- Use test-driven development with both unit tests and integration tests
+- Distinguish between testing the server response and testing state change
 
 ## Exercise 1a: Reading, understanding and documenting
 
