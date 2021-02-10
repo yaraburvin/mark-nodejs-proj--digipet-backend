@@ -46,7 +46,7 @@ describe.skip("feedDigipet", () => {
   });
 });
 
-describe.skip("hatchDigipet", () => {
+describe("hatchDigipet", () => {
   test("when there is no current digipet, it creates a digipet with default initial values", () => {
     // setup
     setDigipet(undefined);
