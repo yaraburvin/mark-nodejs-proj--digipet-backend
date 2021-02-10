@@ -27,7 +27,7 @@ describe.skip("When a user trains a digipet repeatedly, its discipline increases
     expect(response.body.digipet).toHaveProperty("discipline", 75);
   });
 
-  test("1st GET /digipet/train informs them about the train and shows increase discipline and decreased nutrition for digipet", async () => {
+  test("1st GET /digipet/train informs them about the train and shows increase discipline for digipet", async () => {
     const response = await supertest(app).get("/digipet/train");
     expect(response.body.digipet).toHaveProperty("discipline", 85);
   });
