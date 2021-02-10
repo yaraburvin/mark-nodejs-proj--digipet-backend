@@ -4,12 +4,12 @@ import {
   trainDigipet,
   walkDigipet,
 } from "./controller";
-import { getDigipet, INITIAL_DIGIPET, resetDigipet, setDigipet } from "./model";
+import { getDigipet, INITIAL_DIGIPET, setDigipet } from "./model";
 
 describe.skip("feedDigipet", () => {
   it("increases digipet nutrition by 10 and decreases discipline by 5", () => {
     // setup
-    resetDigipet();
+    setDigipet(INITIAL_DIGIPET);
     expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
 
     // act
@@ -47,14 +47,15 @@ describe.skip("feedDigipet", () => {
 });
 
 describe("hatchDigipet", () => {
-  test("when there is no current digipet, it creates a digipet with default initial values", () => {
+  test("when there is no current digipet, it creates a digipet with default initial values and returns it", () => {
     // setup
     setDigipet(undefined);
 
     // act
-    hatchDigipet();
+    const digipet = hatchDigipet();
 
     // assert
+    expect(digipet).toStrictEqual(INITIAL_DIGIPET);
     expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
   });
 
@@ -70,7 +71,7 @@ describe("hatchDigipet", () => {
 describe.skip("trainDigipet", () => {
   it("increases digipet discipline by 10 and decreases happiness by 5", () => {
     // setup
-    resetDigipet();
+    setDigipet(INITIAL_DIGIPET);
     expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
 
     // act
@@ -110,7 +111,7 @@ describe.skip("trainDigipet", () => {
 describe("walkDigipet", () => {
   it("increases digipet happiness by 10 and decreases nutrition by 5 (to represent need for sustenance)", () => {
     // setup
-    resetDigipet();
+    setDigipet(INITIAL_DIGIPET);
     expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
 
     // act

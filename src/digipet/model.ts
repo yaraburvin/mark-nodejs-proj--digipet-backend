@@ -40,11 +40,6 @@ export function getDigipet(): Digipet | null {
   return _userDigipet ? { ..._userDigipet } : null;
 }
 
-export function resetDigipet(): void {
-  // spread to avoid mutating initial digipet
-  _userDigipet = { ...INITIAL_DIGIPET };
-}
-
 /**
  * Set the user's digipet to a new object (or `undefined`)
  *

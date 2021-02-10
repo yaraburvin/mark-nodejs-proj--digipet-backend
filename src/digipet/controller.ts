@@ -1,4 +1,5 @@
 import {
+  Digipet,
   getDigipet,
   INITIAL_DIGIPET,
   setDigipet,
@@ -13,12 +14,14 @@ import {
 
 export function feedDigipet(): void {}
 
-export function hatchDigipet(): void {
+export function hatchDigipet(): Digipet {
   if (getDigipet()) {
     throw new Error("Can't hatch a digipet when you already have one!");
   } else {
-    // spread to avoid mutation
-    setDigipet({ ...INITIAL_DIGIPET });
+    // spread to avoid accidental mutation
+    const newDigipet = { ...INITIAL_DIGIPET };
+    setDigipet(newDigipet);
+    return newDigipet;
   }
 }
 
