@@ -11,7 +11,9 @@ We're going to be interpreting and extending a server using TDD.
 - Test HTTP GET requests with supertest
 - Distinguish between unit tests and non-unit tests (either integration tests or end-to-end tests)
 
-# Exercise 1: Reading, understanding and documenting
+## Exercise 1a: Reading, understanding and documenting
+
+(can be completed alongside 1b, or before/after)
 
 > 🎯 **Success criterion:** a document which outlines how you think this Express server works. You don't have to achieve a theory which explains 100%, but you should strive to explain as much as possible.
 
@@ -23,7 +25,11 @@ We're going to be interpreting and extending a server using TDD.
 6. Experiment with changing things
 7. Produce a narrative document
 
-## Making sense of the structure
+## Exercise 1b: Making sense of the system and its units
+
+(can be completed alongside 1a, or before/after)
+
+> 🎯 **Success criterion:** you can demonstrate the independence of different units within the system of walking your digipet by (deliberately) breaking one set of unit tests without breaking other sets of unit tests
 
 ### `/digipet` vs `server.ts`
 
@@ -63,7 +69,9 @@ Once you have read that, we'll consider how types of test manifest in the codeba
 
 Let's look at how we're testing "walking a digipet".
 
-The desired behaviour of walking a digipet is:
+Before you attempt this section, you should experiment with walking your digipet through Postman and the `/digipet/walk` endpoint.
+
+The desired behaviour of walking a digipet (which you should be able to observe) is:
 
 1. If we have a digipet, we should be able to walk our digipet through the `/digipet/walk` endpoint
    1. _Data change_: Walking a digipet should increase its happiness by `10` and decrease its nutrition by `5` (to model needing to replenish energy)
@@ -110,13 +118,26 @@ This is, again, _unit testing_: tightly focused to a single endpoint, and not de
 
 **3. Does this come together as expected?**
 
-There are three sets of tests related to this, in three different files:
+Unit tests check small individual parts of a system - the 'non-unit' tests then check the wider system:
 
-- `src/server.test.ts` - unit tests for server endpoints
-- `src/digipet/controller.test.ts` - unit tests for controller functions
-- `src/__tests__/walking.e2e.test.ts` - E2E tests
+- _integration tests_ check a small number of parts of the system work together
+- _end-to-end (E2E) tests_ check the system as a whole against user journeys, from start to finish
 
-We're
+We could test that, when we hit the `/digipet/walk` endpoint repeatedly over time, the server response and data change happen in tandem as we expect - the server response demonstrates the increase and decrease in happiness and nutrition respectively, up to the ceiling of `100` and floor of `0`.
+
+Because we have a very small system (which doesn't have many parts), the distinction between 'integration tests' and 'E2E tests' is a little more grey, so this isn't the critical distinction to focus on right now - but there's a _non-unit_ test in `/__tests__/walking.test.ts`.
+
+> 🧠 Make sure that you can find the relevant test
+
+### Breaking independent unit tests
+
+Well-designed unit tests, which test separate units of the system, should be independent as much as possible.
+
+Specifically, in this example: it should be possible for our `walkDigipet` unit tests to fail without the `/digipet/walk` unit tests failing, and vice-versa.
+
+(However, our non-unit test, which brings these two together, might be expected to fail when one of its component units is failing.)
+
+The unit tests have been written in such a way to make this work.
 
 EXERCISES
 
