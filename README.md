@@ -185,10 +185,6 @@ Unlike above, we're not giving you the prescriptive behaviour - it's up to you t
 2. Write tests for this behaviour (unit tests and integration tests)
 3. Write the code to pass your tests
 
-## Exercise 4: Simple front-end
-
-> 🎯 **Success criterion:** a React frontend for your digipet game - running on `localhost:3000` and making requests to your backend on `localhost:4000`
-
 ## Exercise 4: Commentary and reflection
 
 > 🎯 **Success criterion:** documented reflections.
