@@ -1,9 +1,4 @@
-import {
-  feedDigipet,
-  ignoreDigipet,
-  trainDigipet,
-  walkDigipet,
-} from "./controller";
+import { feedDigipet, trainDigipet, walkDigipet } from "./controller";
 import { getDigipet, INITIAL_DIGIPET, resetDigipet, setDigipet } from "./model";
 
 describe.skip("feedDigipet", () => {
