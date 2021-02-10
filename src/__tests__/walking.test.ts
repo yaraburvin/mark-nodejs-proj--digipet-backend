@@ -3,7 +3,7 @@ import { Digipet, setDigipet } from "../digipet/model";
 import app from "../server";
 
 /**
- * This file has end-to-end (E2E) tests for walking a digipet.
+ * This file has integration tests for walking a digipet.
  *
  * It is intended to test two behaviours:
  *  1. walking a digipet leads to increasing happiness
