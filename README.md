@@ -125,9 +125,7 @@ Unit tests check small individual parts of a system - the 'non-unit' tests then 
 
 We could test that, when we hit the `/digipet/walk` endpoint repeatedly over time, the server response and data change happen in tandem as we expect - the server response demonstrates the increase and decrease in happiness and nutrition respectively, up to the ceiling of `100` and floor of `0`.
 
-Because we have a very small system (which doesn't have many parts), the distinction between 'integration tests' and 'E2E tests' is a little more grey, so this isn't the critical distinction to focus on right now - but there's a _non-unit_ test in `/__tests__/walking.test.ts`.
-
-> 🧠 Make sure that you can find the relevant test
+Because we have a very small system (which doesn't have many parts), the distinction between 'integration tests' and 'E2E tests' is a little more grey, so this isn't the critical distinction to focus on right now - what's most important to note is that the tests in `/__tests__/walking.test.ts` are _non-unit_ tests.
 
 ### Breaking independent unit tests
 
@@ -145,6 +143,21 @@ So, _without changing the test code_:
 (These are temporary things to do - you should revert the code back to a non-breaking state after each task.)
 
 Does the non-unit test break when one of its unit components break?
+
+## Exercise 2: Test-driven development on the backend - existing tests
+
+> 🎯 **Success criterion:** the tests (both unit and integration) for training and feeding the digipet all pass
+
+There are unit and integration tests already written for training and feeding digipets. It's your task to make them pass.
+
+They have a very similar structure to the tests for walking a digipet: a set of integration tests, and two sets of unit tests.
+
+A sensible approach is to build up from the unit tests to the integration tests (and it may be sufficient to get the unit tests to pass for the integration tests to pass).
+
+Try the following two approaches:
+
+1. For training the digipet, start with making the `trainDigipet` unit tests pass and then move onto the `/digipet/train` unit tests
+2. For feeding the digipet, start with making the `/digipet/feed` unit tests pass and then move onto the `/digipet/feed` unit tests
 
 EXERCISES
 
