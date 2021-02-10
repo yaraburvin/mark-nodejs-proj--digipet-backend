@@ -8,6 +8,8 @@ import { updateDigipetBounded } from "./model";
 
 export function feedDigipet(): void {}
 
+export function hatchDigipet(): void {}
+
 export function trainDigipet(): void {}
 
 export function walkDigipet(): void {

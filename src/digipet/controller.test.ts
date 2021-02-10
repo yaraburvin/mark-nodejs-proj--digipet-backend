@@ -1,4 +1,9 @@
-import { feedDigipet, trainDigipet, walkDigipet } from "./controller";
+import {
+  feedDigipet,
+  hatchDigipet,
+  trainDigipet,
+  walkDigipet,
+} from "./controller";
 import { getDigipet, INITIAL_DIGIPET, resetDigipet, setDigipet } from "./model";
 
 describe.skip("feedDigipet", () => {
@@ -38,6 +43,27 @@ describe.skip("feedDigipet", () => {
 
     // assert
     expect(getDigipet()).toHaveProperty("discipline", 0);
+  });
+});
+
+describe.skip("hatchDigipet", () => {
+  test("when there is no current digipet, it creates a digipet with default initial values", () => {
+    // setup
+    setDigipet(undefined);
+
+    // act
+    hatchDigipet();
+
+    // assert
+    expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
+  });
+
+  test("when there is a current digipet, it throws an error", () => {
+    // setup
+    setDigipet({ happiness: 50, nutrition: 50, discipline: 50 });
+
+    // assert error gets thrown
+    expect(() => hatchDigipet()).toThrowError();
   });
 });
 
