@@ -1,5 +1,5 @@
 {
-  "name": "mark-nodejs-proj--digipet",
+  "name": "mark-nodejs-proj--digipet-backend",
   "version": "0.0.1",
   "scripts": {
     "start": "ts-node src",
