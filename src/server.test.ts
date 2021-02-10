@@ -1,10 +1,5 @@
 import supertest from "supertest";
-import {
-  feedDigipet,
-  ignoreDigipet,
-  trainDigipet,
-  walkDigipet,
-} from "./digipet/controller";
+import { feedDigipet, trainDigipet, walkDigipet } from "./digipet/controller";
 import { INITIAL_DIGIPET, resetDigipet, setDigipet } from "./digipet/model";
 import app from "./server";
 
@@ -76,7 +71,6 @@ describe("action routes", () => {
     const routesAndControllers = {
       /* test for these once written */
       // "/digipet/feed": feedDigipet,
-      // "/digipet/ignore": ignoreDigipet,
       // '/digipet/train': trainDigipet,
       "/digipet/walk": walkDigipet,
     };
