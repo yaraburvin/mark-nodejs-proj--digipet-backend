@@ -1,6 +1,6 @@
 import express from "express";
-import { getDigipet, resetDigipet } from "./digipet/model";
-import { walkDigipet } from "./digipet/controller";
+import { getDigipet } from "./digipet/model";
+import { hatchDigipet, walkDigipet } from "./digipet/controller";
 
 const app = express();
 
@@ -41,11 +41,11 @@ app.get("/digipet/hatch", (req, res) => {
       digipet,
     });
   } else {
-    resetDigipet();
+    const digipet = hatchDigipet();
     res.json({
       message:
         "You have successfully hatched an adorable new digipet. Just the cutest.",
-      digipet: getDigipet(),
+      digipet,
     });
   }
 });

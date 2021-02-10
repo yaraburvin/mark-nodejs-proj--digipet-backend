@@ -1,6 +1,11 @@
 import supertest from "supertest";
-import { feedDigipet, trainDigipet, walkDigipet } from "./digipet/controller";
-import { INITIAL_DIGIPET, resetDigipet, setDigipet } from "./digipet/model";
+import {
+  feedDigipet,
+  hatchDigipet,
+  trainDigipet,
+  walkDigipet,
+} from "./digipet/controller";
+import { INITIAL_DIGIPET, setDigipet } from "./digipet/model";
 import app from "./server";
 
 /**
@@ -36,7 +41,7 @@ describe("GET /instructions", () => {
 
 describe("GET /digipet", () => {
   test("if the user has a digipet, it responds with the digipet data and a message about the user's digipet", async () => {
-    resetDigipet();
+    setDigipet(INITIAL_DIGIPET);
     const response = await supertest(app).get("/digipet");
     expect(response.body.digipet).toStrictEqual(INITIAL_DIGIPET);
     expect(response.body.message).toMatch(/your digipet/i);
@@ -52,17 +57,34 @@ describe("GET /digipet", () => {
 
 describe("GET /digipet/hatch", () => {
   test("if the user has a digipet, it responds with a message explaining that a digipet can't be hatched whilst the user has another", async () => {
-    resetDigipet();
+    // setup
+    if (jest.isMockFunction(hatchDigipet) /* type guard */) {
+      hatchDigipet.mockReset();
+    }
+    setDigipet(INITIAL_DIGIPET);
+
+    // act
     const response = await supertest(app).get("/digipet/hatch");
+
+    // assert
     expect(response.body.message).toMatch(/can't hatch/i);
+    expect(hatchDigipet).toHaveBeenCalledTimes(0);
   });
 
-  test("if the user has no digipet, it responds with a message about successfully hatching a digipet, and default digipet data", async () => {
+  test("if the user has no digipet, it responds with a message about successfully hatching a digipet and calls hatchDigipet", async () => {
+    // setup
+    if (jest.isMockFunction(hatchDigipet) /* type guard */) {
+      hatchDigipet.mockReset();
+    }
     setDigipet(undefined);
+
+    // act
     const response = await supertest(app).get("/digipet/hatch");
-    expect(response.body.digipet).toStrictEqual(INITIAL_DIGIPET);
+
+    // assert
     expect(response.body.message).toMatch(/success/i);
     expect(response.body.message).toMatch(/hatch/i);
+    expect(hatchDigipet).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -95,7 +117,7 @@ describe("action routes", () => {
   describe.skip("GET /digipet/feed", () => {
     test("if the user has a digipet, it calls the feedDigipet controller and responds with a message about feeding the digipet", async () => {
       // setup: reset digipet
-      resetDigipet();
+      setDigipet(INITIAL_DIGIPET);
 
       const response = await supertest(app).get("/digipet/feed");
 
@@ -110,7 +132,8 @@ describe("action routes", () => {
 
     it("delegates state change to the feedDigipet function", async () => {
       // setup: reset digipet and mock function
-      resetDigipet();
+      setDigipet(INITIAL_DIGIPET);
+
       if (jest.isMockFunction(feedDigipet) /* type guard */) {
         feedDigipet.mockReset();
       }
@@ -124,7 +147,7 @@ describe("action routes", () => {
   describe.skip("GET /digipet/train", () => {
     test("if the user has a digipet, it calls the trainDigipet controller and responds with a message about training the digipet", async () => {
       // setup: reset digipet
-      resetDigipet();
+      setDigipet(INITIAL_DIGIPET);
 
       const response = await supertest(app).get("/digipet/train");
 
@@ -141,7 +164,7 @@ describe("action routes", () => {
 
     it("delegates state change to the trainDigipet function", async () => {
       // setup: reset digipet and mock function
-      resetDigipet();
+      setDigipet(INITIAL_DIGIPET);
       if (jest.isMockFunction(trainDigipet) /* type guard */) {
         trainDigipet.mockReset();
       }
@@ -155,7 +178,7 @@ describe("action routes", () => {
   describe("GET /digipet/walk", () => {
     test("if the user has a digipet, it responds with a message about the walk", async () => {
       // setup: reset digipet
-      resetDigipet();
+      setDigipet(INITIAL_DIGIPET);
 
       const response = await supertest(app).get("/digipet/walk");
 
@@ -170,7 +193,7 @@ describe("action routes", () => {
 
     it("delegates state change to the walkDigipet function", async () => {
       // setup: reset digipet and mock function
-      resetDigipet();
+      setDigipet(INITIAL_DIGIPET);
       if (jest.isMockFunction(walkDigipet) /* type guard */) {
         walkDigipet.mockReset();
       }
