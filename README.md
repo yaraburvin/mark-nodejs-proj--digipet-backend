@@ -135,9 +135,16 @@ Well-designed unit tests, which test separate units of the system, should be ind
 
 Specifically, in this example: it should be possible for our `walkDigipet` unit tests to fail without the `/digipet/walk` unit tests failing, and vice-versa.
 
-(However, our non-unit test, which brings these two together, might be expected to fail when one of its component units is failing.)
-
 The unit tests have been written in such a way to make this work.
+
+So, _without changing the test code_:
+
+1. Make the `walkDigipet` unit tests fail without making the `/digipet/walk` unit tests fail
+2. Make the `/digipet/walk` unit tests fail without making the `walkDigipet` unit tests fail
+
+(These are temporary things to do - you should revert the code back to a non-breaking state after each task.)
+
+Does the non-unit test break when one of its unit components break?
 
 EXERCISES
 
