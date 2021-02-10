@@ -1,8 +1,14 @@
 import express from "express";
+import cors from "cors";
 import { getDigipet } from "./digipet/model";
 import { hatchDigipet, walkDigipet } from "./digipet/controller";
 
 const app = express();
+
+/**
+ * Simplest way to connect a front-end. Unimportant detail right now, although you can read more: https://flaviocopes.com/express-cors/
+ */
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json({
