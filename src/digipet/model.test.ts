@@ -1,10 +1,4 @@
-import {
-  _userDigipet,
-  Digipet,
-  getDigipet,
-  updateDigipetBounded,
-  setDigipet,
-} from "./model";
+import { Digipet, getDigipet, updateDigipetBounded, setDigipet } from "./model";
 
 describe("getDigipet", () => {
   it("gets the stats for the user digipet (but not the underlying object)", () => {
@@ -21,6 +15,26 @@ describe("getDigipet", () => {
   it("returns null if there is no digipet", () => {
     setDigipet(undefined);
     expect(getDigipet()).toBeNull();
+  });
+
+  it("resists accidental mutation", () => {
+    const digipetTest: Digipet = {
+      happiness: 60,
+      nutrition: 60,
+      discipline: 60,
+    };
+    setDigipet(digipetTest);
+    const digipetToMutate = getDigipet();
+
+    // act
+    digipetTest.happiness = 0;
+    digipetToMutate!.nutrition = 0;
+
+    expect(getDigipet()).toStrictEqual({
+      happiness: 60,
+      nutrition: 60,
+      discipline: 60,
+    });
   });
 });
 
@@ -147,24 +161,19 @@ describe("updateDigipetBounded", () => {
 });
 
 describe("setDigipet", () => {
-  it("reassigns the _userDigipet variable to a passed in argument", () => {
+  it("reassigns userDigipet to passed in values (but not object reference)", () => {
     const sampleDigipet: Digipet = {
       happiness: 100,
       nutrition: 80,
       discipline: 30,
     };
 
-    // different reference before execution
-    expect(_userDigipet).not.toBe(sampleDigipet);
-
     setDigipet(sampleDigipet);
 
-    // same reference after execution
-    expect(_userDigipet).toBe(sampleDigipet);
-  });
+    // same deep value after execution
+    expect(getDigipet()).toStrictEqual(sampleDigipet);
 
-  it("reassigns the _userDigipet variable to undefined when no argument passed in", () => {
-    setDigipet();
-    expect(_userDigipet).toBeUndefined();
+    // does not assign reference - to prevent accidental mutation
+    expect(getDigipet()).not.toBe(sampleDigipet);
   });
 });
