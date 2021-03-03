@@ -159,7 +159,7 @@ A sensible approach is to build up from the unit tests to the integration tests 
 Try the following two approaches:
 
 1. For training the digipet, start with making the `trainDigipet` unit tests pass and then move onto the `/digipet/train` unit tests
-2. For feeding the digipet, start with making the `/digipet/feed` unit tests pass and then move onto the `/digipet/feed` unit tests
+2. For feeding the digipet, start with making the `/digipet/feed` unit tests pass and then move onto the `feedDigipet` unit tests
 
 ## Exercise 2: TDD (specification provided) - ignoring
 
