@@ -1,4 +1,4 @@
-import { Digipet, getDigipet, updateDigipetBounded, setDigipet } from "./model";
+import { Digipet, getDigipet, updateDigipetBounded, setDigipet, decreasedByTen } from "./model";
 
 describe("getDigipet", () => {
   it("gets the stats for the user digipet (but not the underlying object)", () => {
@@ -177,3 +177,38 @@ describe("setDigipet", () => {
     expect(getDigipet()).not.toBe(sampleDigipet);
   });
 });
+
+
+describe("decrease all properties of digipet by 10", () => {
+  it("decreases each value by 10", () => {
+  const sampleDigipet: Digipet = {
+    happiness: 100,
+    nutrition: 80,
+    discipline: 30,
+  }
+  setDigipet(sampleDigipet)
+  decreasedByTen()
+  expect(getDigipet()).toStrictEqual({
+    happiness: 90,
+    nutrition: 70,
+    discipline: 20,
+  })
+});
+it("when all properties reach zero,t ehy stay at zero", () =>{
+  const sampleDigipet: Digipet = {
+    happiness: 9,
+    nutrition: 15,
+    discipline: 7,
+  }
+  setDigipet(sampleDigipet)
+  decreasedByTen()
+  expect(getDigipet()).toStrictEqual({
+    happiness: 0,
+    nutrition: 5,
+    discipline: 0,
+  })
+});
+
+})
+
+  

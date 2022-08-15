@@ -1,12 +1,13 @@
 import {
   feedDigipet,
   hatchDigipet,
+  ignoreDigipet,
   trainDigipet,
   walkDigipet,
 } from "./controller";
 import { getDigipet, INITIAL_DIGIPET, setDigipet } from "./model";
 
-describe.skip("feedDigipet", () => {
+describe("feedDigipet", () => {
   it("increases digipet nutrition by 10 and decreases discipline by 5", () => {
     // setup
     setDigipet(INITIAL_DIGIPET);
@@ -45,7 +46,7 @@ describe.skip("feedDigipet", () => {
     expect(getDigipet()).toHaveProperty("discipline", 0);
   });
 });
-
+// desrcibe tests groups multiple tests together
 describe("hatchDigipet", () => {
   test("when there is no current digipet, it creates a digipet with default initial values and returns it", () => {
     // setup
@@ -68,7 +69,7 @@ describe("hatchDigipet", () => {
   });
 });
 
-describe.skip("trainDigipet", () => {
+describe("trainDigipet", () => {
   it("increases digipet discipline by 10 and decreases happiness by 5", () => {
     // setup
     setDigipet(INITIAL_DIGIPET);
@@ -142,6 +143,47 @@ describe("walkDigipet", () => {
 
     // act
     walkDigipet();
+
+    // assert
+    expect(getDigipet()).toHaveProperty("nutrition", 0);
+  });
+});
+
+
+describe("walkDigipet", () => {
+  it("increases digipet happiness by 10 and decreases nutrition by 5 (to represent need for sustenance)", () => {
+    // setup
+    setDigipet(INITIAL_DIGIPET);
+    expect(getDigipet()).toStrictEqual(INITIAL_DIGIPET);
+
+    // act
+    ignoreDigipet();
+
+    // assert
+    expect(getDigipet()).toStrictEqual({
+      happiness: INITIAL_DIGIPET.happiness - 10,
+      nutrition: INITIAL_DIGIPET.nutrition - 10,
+      discipline: INITIAL_DIGIPET.discipline - 10,
+    });
+  });
+
+  it("cannot decrease happiness past 0", () => {
+    // setup
+    setDigipet({ happiness: 5, nutrition: 50, discipline: 40 });
+
+    // act
+    ignoreDigipet();
+
+    // assert
+    expect(getDigipet()).toHaveProperty("happiness", 0);
+  });
+
+  it("cannot decrease nutrition below 0", () => {
+    // setup
+    setDigipet({ happiness: 50, nutrition: 0, discipline: 50 });
+
+    // act
+    ignoreDigipet();
 
     // assert
     expect(getDigipet()).toHaveProperty("nutrition", 0);

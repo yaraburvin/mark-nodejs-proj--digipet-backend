@@ -74,3 +74,29 @@ export function updateDigipetBounded(
     setDigipet(digipetData);
   }
 }
+
+export function decreasedByTen() :void {
+  const digipetData = getDigipet(); // is a shallow copy
+
+    if (digipetData) {
+
+        digipetData["nutrition"] -= 10
+        digipetData["happiness"] -= 10
+        digipetData["discipline"] -= 10
+      
+    if (digipetData["happiness"] < 0) {
+      digipetData["happiness"] = 0;
+      }
+    
+      if (digipetData["nutrition"] < 0) {
+        digipetData["nutrition"] = 0;
+      }
+    
+      if (digipetData["discipline"] < 0) {
+        digipetData["discipline"] = 0
+      }
+      // shallow copy has updated values to set
+      setDigipet(digipetData);
+    
+  }
+}
